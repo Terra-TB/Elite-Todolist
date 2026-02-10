@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    Task Tester
+    <script src="../Task.js"></script>
+    <script>
+        function WriteAssertMsg(expected, actual) {
+            let assertMsg = "Assertion failed, expected " + expected + " but got " + actual + "!"
+
+            return assertMsg
+        }
+        function TestBlank() {
+            let newTask = new Task()
+            console.assert(newTask.getName(), WriteAssertMsg("New Task", newTask.getName())) //i feel like the dj toenail of JS istg
+            console.assert(newTask.getDesc(), WriteAssertMsg("", newTask.getDesc()))
+            console.assert(newTask.getStatus(), WriteAssertMsg("Todo", newTask.getStatus()))
+        }
+
+        function TestALot() {
+            let newTask = new Task("Code Tests", "Code tests for the Task class", "Doing", 9999999999)
+            console.assert(newTask.getName(), WriteAssertMsg("Code Tests", newTask.getName()))
+            console.assert(newTask.getDesc(), WriteAssertMsg("Code tests for the Task class", newTask.getDesc()))
+            console.assert(newTask.getStatus(), WriteAssertMsg("Doing", newTask.getStatus()))
+            console.assert(newTask.getPosition(), WriteAssertMsg(9999999999, newTask.getPosition()))
+        }
+
+        TestBlank();
+        TestALot();
+    </script>
+</body>
+
+</html>
