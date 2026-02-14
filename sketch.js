@@ -1,7 +1,78 @@
+let listArray = [];
+let x = 10;
+// sorry i couldnt think of a better solution for spacing them out
+// well actually i probably could but minimum viable product yknow
+
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(windowWidth, windowHeight);
+
+  let i = 0;
+  while (localStorage.getItem(i.toString()) !== null) {
+    let list = new List();
+    list.getFromLocalStorage(i.toString());
+    listArray.push(list);
+    i++;
+  }
+
+  if(listArray.length === 0){
+    listArray.push(new List(prompt("What would you like you list to be named.")));
+  }
+
+
+
+  // let list1 = new List("Groceries");
+  // list1.addTask(new Task("Apples", "Get 2 Honeycrisp apples"));
+  // list1.addTask(new Task("Bananas", "3 or 4 green bananas"));
+  // listArray.push(list1);  
+
+  // let list2 = new List("Movies To Watch");
+  // list2.addTask(new Task("Marty Supreme", "About table tennis?"));
+  // list2.addTask(new Task("The Muppet Show", "Seth Rogan is in it"));
+  // list2.addTask(new Task("F1", "Cars go vroom"));
+  // listArray.push(list2);  
+
+  //initList();
+
 }
+
 
 function draw() {
   background(220);
+  x = 10;
+  for (const each of listArray) {
+    each.show(x, true);
+    x += 410
+  }
 }
+
+//i could not get this to work V so i was thinking of writing a save all lists funtion aka just lines 52 - 54 and calling it anytime we mutate a list
+
+// window.addEventListener("beforeunload", function () {
+//     for(let i = 0; i < listArray.length; i++){
+//     listArray[i].pushToLocalStorage(i.toString());
+//   }
+// });
+
+
+
+// function initList(){
+//   background(220);
+//   x = 10;
+//   for (const each of listArray) {
+//     each.show(x, true);
+//     x += 410
+//   }
+// }
+
+// function refresh(){
+//   background(220);
+//   x = 10;
+//   if(listArray.length > 0){
+//     for (const each of listArray) {
+      
+//       each.show(x ,false);
+//       x += 410
+//     }
+//   }
+
+// }
