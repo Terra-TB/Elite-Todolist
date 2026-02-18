@@ -149,10 +149,10 @@ class Task {
         textSize(18);
         text(this.name, x + TEXT_X_OFFSET, y + TEXT_Y_PADDING);
         textSize(12);
-        text(this.description, x + TEXT_X_OFFSET, y + TEXT_Y_PADDING * 2);
+        text(this.description, x + TEXT_X_OFFSET, y + TEXT_Y_PADDING * 2.2);
         if (this.status === "Todo") fill(255, 0, 0);
         if (this.status === "Done") fill(0, 255, 0);
-        text(this.status, x + TEXT_X_OFFSET, y + TEXT_Y_PADDING * 3);
+        text(this.status, x + TEXT_X_OFFSET, y + TEXT_Y_PADDING * 3.25);
         fill(255);
     }
 
