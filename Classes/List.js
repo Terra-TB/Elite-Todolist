@@ -173,9 +173,11 @@ class List{
 
         // title
         textAlign(CENTER, CENTER);
+        textSize(24);
         fill(0);
-        text(this.name, x + 200, 30);
+        text(this.name, x + 200, 35);
         fill(255);
+        textSize(12);
 
         // show all tasks in this list
         if(this.listStorage.length > 0){
