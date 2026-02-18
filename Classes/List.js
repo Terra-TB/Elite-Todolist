@@ -3,7 +3,7 @@ const DEFAULT_LIST_NAME = "New List";
 class List{
 
     constructor(name){
-        this.name = name || DEFAULT_LIST_NAME
+        this.name = name || DEFAULT_LIST_NAME;
         this.listStorage = [];
 
         this.addTaskButton = createButton(`Add Task`);
@@ -24,20 +24,25 @@ class List{
         return this.name;
     }
 
-
-    getNewTask(){
-        let name =  prompt("Input the task name.");
-        let desc = prompt("Input the tasks description.");
-        return new Task(name, desc);
-    }
-
     //Adds Task object to storage in List object.
     addTask(task){
         this.listStorage.push(task);
         // set the position of the task
         task.setPosition(this.listStorage.length - 1);
 
-        
+        // create callback functions so that the task can remotely control this list
+
+        // give the task a moveDown callback function which calls the list's moveDown method
+        task.moveDown = () => {
+            const currentIndex = this.listStorage.indexOf(task);
+            this.moveDown(currentIndex); // tell the list to move the task
+        };
+
+        // give the task a moveUp callback function which calls the list's moveUp method
+        task.moveUp = () => {
+            const currentIndex = this.listStorage.indexOf(task);
+            this.moveUp(currentIndex); // tell the list to move the task
+        };
 
     }
 
@@ -51,7 +56,7 @@ class List{
         //move to archive
         //todo
 
-       
+        // ^ i dont really think we should, this works fine
     }
 
     //swap the first index with the second index
@@ -87,7 +92,6 @@ class List{
         this.removeTask(task);
     }
 
-    
 
     deleteListButtons(){
         this.addTaskButton.remove()
@@ -95,9 +99,8 @@ class List{
     }
     
     buttonPressedAddTask(){
-        this.addTask(this.getNewTask())
-        //this.addTask(new Task())
-        refresh();
+        this.addTask(new Task())
+        //refresh();
     }
 
     deleteTaskButtons(){
@@ -110,7 +113,7 @@ class List{
         this.deleteListButtons()
         this.deleteTaskButtons()
         listArray.splice(listArray.indexOf(this), listArray.indexOf(this)>= 0 ? 1 : 0);
-        refresh();
+        //refresh()
     }
 
     toString(){
@@ -126,22 +129,12 @@ class List{
         return output;
     }
 
-
-
     //will need worked on a bit when we get multiple lists
     pushToLocalStorage(listID){
         //uploads the obj it to local storage under the key name of what ever is stored in listID
-        //const stringObj = JSON.stringify(this) <-- this stopped working when we added the buttons
-
-        //does the same thing but without the buttons
-        const data = {
-            name: this.name,
-            listStorage: this.listStorage.map(task => task.toJSON())
-        };
-
-        localStorage.setItem(listID, JSON.stringify(data));
+        const stringObj = JSON.stringify(this)
+        localStorage.setItem(listID, stringObj);
     }
-    
 
     getFromLocalStorage(listId){
         //gets data from local storage
@@ -189,8 +182,6 @@ class List{
             //console.log("show")
             this.showTask()
         }
-        
-        
     
     }
 
