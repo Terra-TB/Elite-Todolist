@@ -172,12 +172,17 @@ class List{
     }
 
     show(x) {
+        fill(255)
         // box
-        rect(x, 10, 400, 1000, 15);
+        let verticalOffsetTop = 100;
+        let verticalOffsetBottom = 125;
+
+        
+        rect(x, verticalOffsetTop, 400, windowHeight - verticalOffsetBottom, 15);
 
         //sets pos of buttons
-        this.addTaskButton.position(x + 10, 20);
-        this.deleteListButton.position(x + 310, 20);
+        this.addTaskButton.position(x + 10, verticalOffsetTop + 10);
+        this.deleteListButton.position(x + 310, verticalOffsetTop + 10);
 
         //shows buttons
         this.addTaskButton.show();
@@ -186,24 +191,25 @@ class List{
         // title
         textAlign(CENTER, CENTER);
         fill(0);
-        text(this.name, x + 200, 30);
+        text(this.name, x + 200, verticalOffsetTop + 20);
         fill(255);
 
         // show all tasks in this list
         if(this.listStorage.length > 0){
             //console.log("show")
-            this.showTask()
+            this.showTask(70 + verticalOffsetTop)
         }
         
         
     
     }
 
-    showTask(){
-        let y = 70;
+    showTask(y){
+    
+        let taskSpacing = 150;// has to be < 130
         for (let each of this.listStorage) {
             each.show(x + 10, y);
-            y += 130;
+            y += taskSpacing;
         }
     }
 

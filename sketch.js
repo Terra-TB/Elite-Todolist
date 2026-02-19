@@ -1,10 +1,13 @@
 let listArray = [];
 let x = 10;
+let menuBar;
 // sorry i couldnt think of a better solution for spacing them out
 // well actually i probably could but minimum viable product yknow
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+
+  menuBar = new Bar(10, 10, windowWidth -20, 75, 15, 180)
 
   let i = 0;
   while (localStorage.getItem(i.toString()) !== null) {
@@ -43,6 +46,8 @@ function draw() {
     each.show(x, true);
     x += 410
   }
+
+  menuBar.show();
 }
 
 function saveAllLists(){
@@ -80,3 +85,5 @@ function refresh(){
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+
+
