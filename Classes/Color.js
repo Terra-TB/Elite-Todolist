@@ -17,7 +17,13 @@ class Color {
 
     //instead of passing in numbers for the color() thing pass this in (yes this is tested and works)
     getColor() {
-        return [this.R, this.G, this.B] //somehow this works as a tuple in p5js? idk dont ask me about it
+        return [this.R, this.G, this.B]
+    }
+
+    mix(otherColor) {
+        this.setRed((this.R + otherColor.R) / 2)
+        this.setGreen((this.G + otherColor.G) / 2)
+        this.setBlue((this.B + otherColor.B) / 2)
     }
     
     copy() {

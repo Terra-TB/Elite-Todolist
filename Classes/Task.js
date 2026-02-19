@@ -53,7 +53,7 @@ const TEXT_Y_OFFSET       = 0   //not used yet
 const TEXT_Y_PADDING      = 30
 
 //id settings
-const ID_MIN              = 1
+const ID_MIN              = 10000
 const ID_MAX              = 99999
 
 class Task {
@@ -62,8 +62,10 @@ class Task {
         this.description = desc     || DEFAULT_DESCRIPTION;
         this.status      = status   || DEFAULT_STATUS;
         this.position    = position || DEFAULT_POSITION;
-        this.finished    =             DEFAULT_FINISHED;
-        this.Id          =             GenerateId()
+        this.finished    =             DEFAULT_FINISHED;  
+        this.id          =             GenerateId()     
+        //uncomment this if u prefer this one
+        //this.id = Math.floor(Date.now() / ((Math.random() * 10000) + 500))
 
         this.markTaskDoneButton = createButton(`Mark Done`);
         this.markTaskDoneButton.hide();
@@ -72,9 +74,6 @@ class Task {
         this.deleteTaskButton = createButton(`Delete Task`);
         this.deleteTaskButton.hide();
         this.deleteTaskButton.mousePressed(() => this.buttonPressedDelete());
-
-        this.id = Math.floor(Date.now() / ((Math.random() * 10000) + 500))
-
     }
 
     //getters and setters
@@ -162,7 +161,6 @@ class Task {
     }
 
     show(x, y) {
-
         // main box
         strokeWeight(5)
         stroke(STROKE_COLOR.getColor())
@@ -205,7 +203,7 @@ class Task {
             data.status, 
             data.position, 
             data.finished,
-            data.Id
+            data.id
         );
     }
 
@@ -217,7 +215,7 @@ class Task {
             status: this.status,
             position: this.position,
             finished: this.finished,
-            Id: this.Id
+            id: this.id
         };
     }
 }
