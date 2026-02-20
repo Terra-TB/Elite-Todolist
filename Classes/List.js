@@ -195,11 +195,11 @@ class List{
         // show all tasks in this list
         if(this.listStorage.length > 0){
             //console.log("show")
-            this.showTasks()
+            this.showTasks(x)
         }
     }
 
-    showTasks(){
+    showTasks(x){
         let y = 70;
         for (let index = 0; index < this.listStorage.length; index++) { 
             let task = this.listStorage[index]
