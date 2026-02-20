@@ -22,7 +22,7 @@ const STATUS_SIZE         = 16
 const TEXT_FONT           = "Courier New" //TODO: change the font to something thats actually good (this is just one i picked randomly)
 
 //colors, lots of colors
-const BACKGROUND_COLOR    = new Color(255, 255, 255)
+const BACKGROUND_COLORS    = [new Color(58, 110, 165), new Color(192, 192, 192), new Color(161, 130, 118), new Color(55, 18, 60), new Color(27, 48, 34), new Color(114, 97, 163), new Color(212, 81, 19), new Color(60, 110, 113), new Color(58, 90, 64), new Color(52, 78, 65)]
 const NAME_COLOR          = new Color(0,   0,   0)
 const DESC_COLOR          = new Color(100, 100, 100)
 const WHY_IS_THIS_HERE    = new Color(255, 255, 255)
@@ -68,6 +68,7 @@ class Task {
         this.position    = position || DEFAULT_POSITION;
         this.finished    =             DEFAULT_FINISHED;
         this.Id          =             GenerateId()
+        this.bgColor = random(BACKGROUND_COLORS).getColor();
 
         this.markTaskDoneButton = createButton(`Mark Done`);
         this.markTaskDoneButton.hide();
@@ -236,7 +237,6 @@ class Task {
             }
         }
         console.log(this.id + " was marked as done");
-        //refresh();
         refresh();
         saveAllLists();
     }
@@ -253,7 +253,7 @@ class Task {
     getListTask(){
         for(let list of listArray){
             let storage = list.getStorage();
-            if(storage.findIndex(t => t.id === this.id) != -1){
+            if(storage.findIndex(t => t.Id === this.Id) != -1){
                 return list;
             }
         }
@@ -267,7 +267,10 @@ class Task {
         // main box
         strokeWeight(5)
         stroke(STROKE_COLOR.getColor())
+        push();
+        fill(this.bgColor)
         rect(x, y, 380, 120, 10);
+        pop();
 
         // sets pos of buttons        
         this.moveTaskUpButton.position(x + 10, y+7);
