@@ -27,15 +27,12 @@ const NAME_COLOR          = new Color(0,   0,   0)
 const DESC_COLOR          = new Color(100, 100, 100)
 const WHY_IS_THIS_HERE    = new Color(255, 255, 255)
 
+const TASK_FILL           = new Color(255, 255, 255)
 const STROKE_COLOR        = new Color(100, 230, 255)
-const TODO_COLOR          = new Color(255, 0,   0)
-const DOING_COLOR         = new Color(255, 255, 0)
-const DONE_COLOR          = new Color(0,   255, 0)
-
 const STATUS_COLORS       = {
-    Todo: TODO_COLOR,
-    Doing: DOING_COLOR,
-    Done: DONE_COLOR,
+    Todo: new Color(255, 0,   0),
+    Doing: new Color(255, 255, 0),
+    Done: new Color(0,   255, 0),
 }
 
 //confirm button settings (offsets so far)
@@ -57,15 +54,15 @@ const ID_MIN              = 10000
 const ID_MAX              = 99999
 
 class Task {
-    constructor(name, desc, status, position) { 
+    constructor(name, desc, status, position, id) { 
         this.name        = name     || DEFAULT_TASK_NAME;
         this.description = desc     || DEFAULT_DESCRIPTION;
         this.status      = status   || DEFAULT_STATUS;
         this.position    = position || DEFAULT_POSITION;
         this.finished    =             DEFAULT_FINISHED;  
-        this.id          =             GenerateId()     
+        this.id          = id       || GenerateId()     
         //uncomment this if u prefer this one
-        //this.id = Math.floor(Date.now() / ((Math.random() * 10000) + 500))
+        // this.id          = id       || Math.floor(Date.now() / ((Math.random() * 10000) + 500))
 
         this.markTaskDoneButton = createButton(`Mark Done`);
         this.markTaskDoneButton.hide();
@@ -81,6 +78,7 @@ class Task {
     getDesc()     { return this.description }
     getStatus()   { return this.status }
     getPosition() { return this.position}
+    getId()       { return this.id }
     isFinished()  { return this.finished }
 
     setName(newName)       { this.name        = newName   || DEFAULT_TASK_NAME }
@@ -130,6 +128,19 @@ class Task {
         return output;
     }
 
+    //converts the Task to a save string, whoever knows how to work localstorage pls implement this
+    toSaveString() {
+        let saveString = ""
+
+        saveString += this.getName() + "|"
+        saveString += this.getDesc() + "|"
+        saveString += this.getStatus() + "|"
+        saveString += this.getPosition() + "|"
+        saveString += this.getId() + ""
+
+        return saveString
+    }
+
     deleteTaskButtons(){
         this.markTaskDoneButton.remove();
         this.deleteTaskButton.remove();
@@ -164,6 +175,7 @@ class Task {
         // main box
         strokeWeight(5)
         stroke(STROKE_COLOR.getColor())
+        fill(TASK_FILL.getColor())
         rect(x, y, 380, 120, 10);
 
         // sets pos of buttons        

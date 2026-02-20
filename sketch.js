@@ -1,8 +1,11 @@
-let listArray = [];
-let x = 10;
+let listArray   = [];
+
+const X_START   = 10;
+const X_PADDING = 410
 // sorry i couldnt think of a better solution for spacing them out
 // well actually i probably could but minimum viable product yknow
 
+//TODO: implement the new convertTaskFromSaveString() function into this... somewhere
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
@@ -15,7 +18,7 @@ function setup() {
   }
 
   if(listArray.length === 0){
-    listArray.push(new List(prompt("What would you like you list to be named.")));
+    listArray.push(new List(prompt("What would you like you list to be named?")));
   }
 
 
@@ -38,11 +41,7 @@ function setup() {
 
 function draw() {
   background(220);
-  x = 10;
-  for (const each of listArray) {
-    each.show(x, true);
-    x += 410
-  }
+  showTasks()
 }
 
 function saveAllLists(){
@@ -64,19 +63,31 @@ function saveAllLists(){
 
 function refresh(){
   background(220);
-  x = 10;
-  if(listArray.length > 0){
-    for (const each of listArray) {
-      
-      each.show(x ,false);
-      x += 410
-    }
+  if(listArray.length <= 0){
+    return
   }
+  showTasks()
+}
 
+function showTasks() {
+  for (let index = 0; index < listArray.length; index++) { //may or may not have forgotten how to use for loops for indices
+    let task = listArray[index]
+    let taskPos = X_START + (index * X_PADDING)
+    task.show(taskPos, false) //keeping this false in just to be safe
+  }
 }
 
 
 // If the window size changes, automatically resize the canvas to fill the browser window
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+}
+
+//may need to be moved to another script, idk where ppl save their stuff
+function convertTaskFromSaveString(saveString) { //generational amount of characters
+    let brokenString = saveString.split("|") //Name, Desc, Status, Position, Id in that order
+    
+    //might be an easier way to do this
+    let newTask = new Task(brokenString[0], brokenString[1], brokenString[2], brokenString[3].parseInt(), brokenString[4].parseInt()) 
+    return newTask
 }
