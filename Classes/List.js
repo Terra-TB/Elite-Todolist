@@ -1,10 +1,21 @@
-const DEFAULT_LIST_NAME = "New List";
+const DEFAULT_LIST_NAME     = "New List";
+
+const LIST_TITLE_COLOR      = new Color();
+const LIST_BACKGROUND_COLOR = new Color(255);
 
 class List{
 
     constructor(name){
         this.name = name || DEFAULT_LIST_NAME
         this.listStorage = [];
+
+        this.addTaskButton = createButton(`Add Task`);
+        this.addTaskButton.hide();
+        this.addTaskButton.mousePressed(() => this.buttonPressedAddTask());
+
+        this.deleteListButton = createButton(`Delete List`);
+        this.deleteListButton.hide();
+        this.deleteListButton.mousePressed(() => this.buttonPressedDeleteList());
     }
 
     //Getters
@@ -16,37 +27,34 @@ class List{
         return this.name;
     }
 
+
+    getNewTask(){
+        let name =  prompt("Input the task name.");
+        let desc = prompt("Input the tasks description.");
+        return new Task(name, desc);
+    }
+
     //Adds Task object to storage in List object.
     addTask(task){
         this.listStorage.push(task);
         // set the position of the task
         task.setPosition(this.listStorage.length - 1);
 
-        // create callback functions so that the task can remotely control this list
-
-        // give the task a moveDown callback function which calls the list's moveDown method
-        task.moveDown = () => {
-            const currentIndex = this.listStorage.indexOf(task);
-            this.moveDown(currentIndex); // tell the list to move the task
-        };
-
-        // give the task a moveUp callback function which calls the list's moveUp method
-        task.moveUp = () => {
-            const currentIndex = this.listStorage.indexOf(task);
-            this.moveUp(currentIndex); // tell the list to move the task
-        };
+        
 
     }
 
     removeTask(task){
         let storage = this.getStorage();
-        const indx = storage.findIndex(t => t.name === task.name);
+        const indx = storage.findIndex(t => t.id === task.id);
 
         //remove task
         this.listStorage.splice(indx, indx >= 0 ? 1 : 0);
 
         //move to archive
         //todo
+
+       
     }
 
     //swap the first index with the second index
@@ -59,7 +67,7 @@ class List{
     // this will swap the tasks at index and index + 1
     moveDown(index){
         // do a safety check to avoid index out of range
-        if(index >= listStorage.length - 1){
+        if(index >= this.listStorage.length - 1){
             return;
         }
         this.swapIndex(index, index + 1);
@@ -69,7 +77,7 @@ class List{
 
         // this will swap the tasks at index and index - 1
     moveUp(index){
-        if(index <= 0){
+        if(index <= 0 || index >= this.listStorage.length){
             return;
         }
         this.swapIndex(index, index - 1);
@@ -82,7 +90,34 @@ class List{
         this.removeTask(task);
     }
 
+    deleteListButtons(){
+        this.addTaskButton.remove()
+        this.deleteListButton.remove();
+        saveAllLists();
+    }
+    
+    buttonPressedAddTask(){
+        this.addTask(this.getNewTask())
+        //this.addTask(new Task())
+        refresh();
+        saveAllLists();
+    }
 
+    deleteTaskButtons(){
+        for (let each of this.listStorage) {
+            each.deleteTaskButtons();
+        }
+        saveAllLists();
+    }
+
+    buttonPressedDeleteList(){
+        this.deleteListButtons()
+        this.deleteTaskButtons()
+        localStorage.clear();
+        listArray.splice(listArray.indexOf(this), listArray.indexOf(this)>= 0 ? 1 : 0);
+        refresh();
+        saveAllLists();
+    }
 
     toString(){
         let output = `List: ${this.name}\n`;
@@ -99,62 +134,76 @@ class List{
 
 
 
-
     //will need worked on a bit when we get multiple lists
     pushToLocalStorage(listID){
         //uploads the obj it to local storage under the key name of what ever is stored in listID
-        const stringObj = JSON.stringify(this)
-        localStorage.setItem(listID, stringObj);
-    }
+        //const stringObj = JSON.stringify(this) <-- this stopped working when we added the buttons
 
+        //does the same thing but without the buttons
+        const data = {
+            name: this.name,
+            listStorage: this.listStorage.map(task => task.toJSON())
+        };
+
+        localStorage.setItem(listID, JSON.stringify(data));
+    }
+    
 
     getFromLocalStorage(listId){
-        //gets data
+        //gets data from local storage
         const data = localStorage.getItem(listId);
-
-
-        //fail safe to check if there is data
-        if(data === null){
+        if (!data) { //should work the same as checking if null (if not change it back to "data === null")
             return;
         }
 
-        //converts data back
+        //converts it to be useable agige
         const parsedData = JSON.parse(data);
 
-        //sets the name of the list to the name saved in local Storage
-        this.name =  parsedData.name;
+        //resets the name
+        this.name = parsedData.name;
 
-        //asinged the objs to a class so it regains its methods
+        //clears the data
+        this.listStorage = []; 
+
+        //needed to add the tasks to the list stoage and i forgot to do that... mb
         if (parsedData.listStorage) {
-            this.listStorage = parsedData.listStorage.map(item => Task.fromJSON(item));
+            for (let item of parsedData.listStorage) {
+                let task = Task.fromJSON(item);
+                this.addTask(task); 
+            }
         }
     }
 
     show(x) {
         // box
-        rect(x, 10, 400, 1000);
+        rect(x, 10, 400, 1000, 15);
 
-        // green box which represents uh some button perhaps
-        fill(0, 150, 0);
-        rect(x + 10, 20, 20, 20)
-        fill(255);
+        //sets pos of buttons
+        this.addTaskButton.position(x + 10, 20);
+        this.deleteListButton.position(x + 310, 20);
 
-        // red box for delete button maybe?
-        fill(150, 0, 0);
-        rect(x + 370, 20, 20, 20)
-        fill(255);
+        //shows buttons
+        this.addTaskButton.show();
+        this.deleteListButton.show();
 
         // title
         textAlign(CENTER, CENTER);
-        fill(0);
+        fill(LIST_TITLE_COLOR.getColor());
         text(this.name, x + 200, 30);
-        fill(255);
+        fill(LIST_BACKGROUND_COLOR.getColor());
 
         // show all tasks in this list
+        if(this.listStorage.length > 0){
+            //console.log("show")
+            this.showTasks()
+        }
+    }
+
+    showTasks(){
         let y = 70;
-        for (const each of this.listStorage) {
-            each.show(x + 10, y);
-            y += 130
+        for (let index = 0; index < this.listStorage.length; index++) { 
+            let task = this.listStorage[index]
+            task.show(x + 10, y + (130 * index));
         }
     }
 
