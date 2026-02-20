@@ -163,8 +163,11 @@ class Task {
     }
 
     editTask(){
-        this.name = prompt("Input the task name.");
-        this.description = prompt("Input the tasks description.");
+        let newName = prompt("Input the task name.");
+        let newDescription = prompt("Input the tasks description.");
+        if (newName !== "") this.name = newName;
+        if (newDescription !== "") this.description = newDescription;
+        this.buttonPressedMenu();
     }
     
     showTaskMenu(){
@@ -183,12 +186,12 @@ class Task {
         pop();
 
         // sets pos of buttons        
-        this.markTaskDoneButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 7);
+        if (this.status === "Todo") this.markTaskDoneButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 7);
         this.editTaskButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 30);
         this.deleteTaskButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 53);
 
         //show move task up/down buttons
-        this.markTaskDoneButton.show();
+        if (this.status === "Todo") this.markTaskDoneButton.show();
         this.editTaskButton.show();
         this.deleteTaskButton.show();
     }
@@ -237,6 +240,7 @@ class Task {
             }
         }
         console.log(this.id + " was marked as done");
+        this.buttonPressedMenu();
         refresh();
         saveAllLists();
     }
@@ -265,7 +269,7 @@ class Task {
         this.y = y;
 
         // main box
-        strokeWeight(5)
+        strokeWeight(3)
         stroke(STROKE_COLOR.getColor())
         push();
         fill(this.bgColor)
@@ -282,7 +286,7 @@ class Task {
         this.moveTaskDownButton.show();
         this.menuButton.show();
 
-        strokeWeight(0)
+        strokeWeight(0);
         // text slop
         textFont(TEXT_FONT)
         //name
@@ -302,6 +306,7 @@ class Task {
         text(this.status, x + TEXT_X_OFFSET, y + TEXT_Y_PADDING * 3);
 
         fill(WHY_IS_THIS_HERE.getColor()); //im confused on why were filling with white here lol (might be p5js jank)
+        strokeWeight(1);
 
         
     }
