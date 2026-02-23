@@ -135,7 +135,7 @@ class List{
 
     deleteTaskButtons(){
         for (let task of this.getStorage()) {
-            task.deleteTaskButtons();
+            task.menu.deleteTaskButtons();
         }
         saveAllLists();
     }
