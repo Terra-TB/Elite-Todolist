@@ -27,11 +27,11 @@ class Menu {
 
         this.moveTaskUpButton = createButton(`⬆️`);
         this.moveTaskUpButton.hide();
-        this.moveTaskUpButton.mousePressed(() => this.slidePosition(1));
+        this.moveTaskUpButton.mousePressed(() => this.slidePosition(-1));
         
         this.moveTaskDownButton = createButton(`⬇️`);
         this.moveTaskDownButton.hide();
-        this.moveTaskDownButton.mousePressed(() => this.slidePosition(-1));
+        this.moveTaskDownButton.mousePressed(() => this.slidePosition(1));
 
         this.menuButton = createButton(`≡`);
         this.menuButton.hide();
@@ -68,6 +68,7 @@ class Menu {
         let list = this.getListTask();
         this.deleteTaskButtons();
         list.removeTask(this.task);
+        list.setTasksPositions()
         this.deleteMenu()
         refresh();
         saveAllLists();
@@ -96,7 +97,7 @@ class Menu {
         saveAllLists();
     }
 
-    showTaskMenu(){
+    show(){
 
         if(!this.taskMenuOpen){
             return;
@@ -149,17 +150,14 @@ class Menu {
 
     slidePosition(direction) {
         let list = this.getListTask();
+        console.log(list);
         const taskIndex = this.task.position
 
         if(direction != -1 && direction != 1){
             return;
         }
 
-        if(direction == -1){
-            list.moveDown(taskIndex);
-        }else if(direction == 1){
-            list.moveUp(taskIndex);
-        }
+        list.swapIndex(taskIndex, taskIndex + direction);
         
         refresh();
         saveAllLists();

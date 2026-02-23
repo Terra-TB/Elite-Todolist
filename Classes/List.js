@@ -57,9 +57,16 @@ class List{
 
     //swap the first index with the second index
     swapIndex(firstIndex, secondIndex){
+
+        if(secondIndex < 0 || secondIndex >= this.listStorage.length){
+            return;
+        }
+
         let temp = this.listStorage[firstIndex]
         this.listStorage[firstIndex] = this.listStorage[secondIndex]
         this.listStorage[secondIndex] = temp;
+
+        this.setTasksPositions()
     }
 
     // this will swap the tasks at index and index + direction (positive or negative 1)
@@ -87,8 +94,8 @@ class List{
         }
         
         this.swapIndex(index, otherTaskIndex);
-        this.listStorage[index].setPosition(index);
-        this.listStorage[otherTaskIndex].setPosition(otherTaskIndex);;
+        // this.listStorage[index].setPosition(index);
+        // this.listStorage[otherTaskIndex].setPosition(otherTaskIndex);;
     }
 
         // this will swap the tasks at index and index - 1
@@ -100,6 +107,13 @@ class List{
     //     this.listStorage[index].setPosition(index);
     //     this.listStorage[index - 1].setPosition(index - 1);
     // }
+
+    setTasksPositions(){
+        let storage = this.listStorage;
+        for(let x = 0; x < this.listStorage.length; x++){
+            storage[x].setPosition(x);
+        }
+    }
 
     moveTask(list, task){
         list.addTask(task);
