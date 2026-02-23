@@ -38,7 +38,7 @@ class List{
 
     removeTask(task){
         let storage = this.getStorage();
-        const indx = storage.findIndex(t => t.Id === task.Id);
+        const indx = storage.findIndex(t => t.id === task.id);
 
         //remove task
         this.listStorage.splice(indx, indx >= 0 ? 1 : 0);
@@ -94,8 +94,8 @@ class List{
         }
         
         this.swapIndex(index, otherTaskIndex);
-        // this.listStorage[index].setPosition(index);
-        // this.listStorage[otherTaskIndex].setPosition(otherTaskIndex);;
+        this.listStorage[index].setPosition(index);
+        this.listStorage[otherTaskIndex].setPosition(otherTaskIndex);
     }
 
         // this will swap the tasks at index and index - 1

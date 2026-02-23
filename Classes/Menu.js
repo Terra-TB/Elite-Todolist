@@ -93,8 +93,6 @@ class Menu {
         this.deleteTaskButton.remove();
         this.editTaskButton.remove();
         this.menuButton.remove();
-
-        saveAllLists();
     }
 
     show(){
@@ -151,7 +149,7 @@ class Menu {
     slidePosition(direction) {
         let list = this.getListTask();
         console.log(list);
-        const taskIndex = this.task.position
+        let taskIndex = this.task.position
 
         if(direction != -1 && direction != 1){
             return;
