@@ -45,7 +45,7 @@ function draw() {
   for (let list of listArray) {
 
     for (let task of list.listStorage) {
-      task.showTaskMenu()
+      task.menu.showTaskMenu()
     }
 
   }

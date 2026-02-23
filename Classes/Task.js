@@ -46,10 +46,6 @@ const CONFIRM_Y_OFFSET    = 10;
 const CANCEL_X_OFFSET     = 350;
 const CANCEL_Y_OFFSET     = 10;
 
-//menu offset
-const MENU_X_OFFSET = 370
-const MENU_Y_OFFSET = 6
-
 //text settings
 const TEXT_X_OFFSET       = 190;
 const TEXT_X_PADDING      = 0;   //not used yet
@@ -70,33 +66,9 @@ class Task {
         this.Id          =             GenerateId()
         this.bgColor = random(BACKGROUND_COLORS).getColor();
 
-        this.markTaskDoneButton = createButton(`Mark Done`);
-        this.markTaskDoneButton.hide();
-        this.markTaskDoneButton.mousePressed(() => this.buttonPressedMarkDone());
-        
-        this.deleteTaskButton = createButton(`Delete Task`);
-        this.deleteTaskButton.hide();
-        this.deleteTaskButton.mousePressed(() => this.buttonPressedDelete());
-
-        this.editTaskButton = createButton(`Edit Task`);
-        this.editTaskButton.hide();
-        this.editTaskButton.mousePressed(() => this.editTask());
-
-        this.moveTaskUpButton = createButton(`⬆️`);
-        this.moveTaskUpButton.hide();
-        this.moveTaskUpButton.mousePressed(() => this.slidePosition(1));
-        
-        this.moveTaskDownButton = createButton(`⬇️`);
-        this.moveTaskDownButton.hide();
-        this.moveTaskDownButton.mousePressed(() => this.slidePosition(-1));
-
-        this.menuButton = createButton(`≡`);
-        this.menuButton.hide();
-        this.menuButton.mousePressed(() => this.buttonPressedMenu());
-
         this.id = Math.floor(Date.now() / ((Math.random() * 10000) + 500))
 
-        this.mainBox = createDiv();
+        this.menu = new Menu(0,0, 100, 105,color(this.bgColor[0],this.bgColor[1],this.bgColor[2]), color(STROKE_COLOR.getColor()[0],STROKE_COLOR.getColor()[1],STROKE_COLOR.getColor()[2]), this)
 
     }
 
@@ -130,25 +102,6 @@ class Task {
         this.setDesc("");
         this.setStatus(TASK_STATES.DELETED);
     }
-
-    //slides task down(-1), or up(1).
-    slidePosition(direction) {
-        let list = this.getListTask();
-        const taskIndex = this.position
-
-        if(direction != -1 && direction != 1){
-            return;
-        }
-
-        if(direction == -1){
-            list.moveDown(taskIndex);
-        }else if(direction == 1){
-            list.moveUp(taskIndex);
-        }
-        
-        refresh();
-        saveAllLists();
-    }
     
 
     //methods
@@ -164,127 +117,13 @@ class Task {
         return output;
     }
 
-    editTask(){
-        this.name = prompt("Input the task name.");
-        this.description = prompt("Input the tasks description.");
-    }
-    
-    showTaskMenu(){
-
-        if(!this.taskMenuOpen){
-            return;
-        }
-
-        const pos = {x: this.x, y: this.y};
-
-        // main box
-        this.mainBox.position(pos.x + MENU_X_OFFSET, pos.y + MENU_Y_OFFSET);
-        this.mainBox.style("width: 100px");
-        this.mainBox.style("height: 105px");
-        this.mainBox.style("z-index: 2")
-        this.mainBox.style(`background-color: ${[color(this.bgColor[0],this.bgColor[1],this.bgColor[2])]}`)
-        this.mainBox.style(`border: 5px solid ${[color(STROKE_COLOR.getColor()[0],STROKE_COLOR.getColor()[1],STROKE_COLOR.getColor()[2])]}`)
-        this.mainBox.style(`border-radius: 10px`)
-        this.mainBox.show();
-
-        // push();
-        // strokeWeight(-)
-        // stroke(STROKE_COLOR.getColor())
-        // rect(pos.x + MENU_X_OFFSET, pos.y + MENU_Y_OFFSET, 100, 105, 10);
-        // pop();
-
-        // sets pos of buttons        
-        this.markTaskDoneButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 7);
-        this.editTaskButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 30);
-        this.deleteTaskButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 53);
-
-        //show move task up/down buttons
-        this.markTaskDoneButton.show();
-        this.editTaskButton.show();
-        this.deleteTaskButton.show();
-
-        //menu buttons style.
-        this.markTaskDoneButton.style('z-index', '3');
-        this.editTaskButton.style('z-index', '3');
-        this.deleteTaskButton.style('z-index', '3');
-
-        //menu buttons position style.
-        this.markTaskDoneButton.style('position', 'absolute');
-        this.editTaskButton.style('position', 'absolute');
-        this.deleteTaskButton.style('position', 'absolute');
-    }
-
-    hideMenuButtons(){
-        this.markTaskDoneButton.hide();
-        this.deleteTaskButton.hide();
-        this.editTaskButton.hide();
-        this.mainBox.hide();
-    }
-
-    deleteTaskButtons(){
-        this.moveTaskUpButton.remove();
-        this.moveTaskDownButton.remove();
-        this.markTaskDoneButton.remove();
-        this.deleteTaskButton.remove();
-        this.editTaskButton.remove();
-        this.menuButton.remove();
-
-        saveAllLists();
-    }
-
-    buttonPressedMenu(){
-        if(!this.taskMenuOpen){
-            this.taskMenuOpen = true;
-            return;
-        }else if(this.taskMenuOpen){
-            this.taskMenuOpen = false;
-
-            this.hideMenuButtons();
-        }
-        
-    }
-
-    buttonPressedMarkDone(){
-        this.setCompleted();
-        let list = this.getListTask();
-        for (let i = 0; i < listArray.length; i++) {
-            if (listArray[i].getName() === "Archive") {
-                list.moveTask(listArray[i], this);
-                break;
-            }
-            if (i === listArray.length - 1) {
-                listArray.push(new ArchiveList);
-                list.moveTask(listArray[i + 1], this);
-                break;
-            }
-        }
-        console.log(this.id + " was marked as done");
-        refresh();
-        saveAllLists();
-    }
-
-    buttonPressedDelete(){
-        let list = this.getListTask();
-        this.deleteTaskButtons();
-        list.removeTask(this);
-        refresh();
-        saveAllLists();
-    }
-
-    //gets the list that the task is in
-    getListTask(){
-        for(let list of listArray){
-            let storage = list.getStorage();
-            if(storage.findIndex(t => t.Id === this.Id) != -1){
-                return list;
-            }
-        }
-    }
-
     show(x, y) {
 
         this.x = x;
         this.y = y;
+
+        this.menu.x = this.x;
+        this.menu.y = this.y;
 
         // main box
         strokeWeight(5)
@@ -295,22 +134,22 @@ class Task {
         pop();
 
         // sets pos of buttons        
-        this.moveTaskUpButton.position(x + 10, y+7);
-        this.moveTaskDownButton.position(x + 10, y+90);
-        this.menuButton.position(x + 345, y + 7);
+        this.menu.moveTaskUpButton.position(x + 10, y+7);
+        this.menu.moveTaskDownButton.position(x + 10, y+90);
+        this.menu.menuButton.position(x + 345, y + 7);
 
         //show move task up/down buttons
-        this.moveTaskUpButton.show();
-        this.moveTaskDownButton.show();
-        this.menuButton.show();
+        this.menu.moveTaskUpButton.show();
+        this.menu.moveTaskDownButton.show();
+        this.menu.menuButton.show();
 
         //sets button styles.
-        this.moveTaskUpButton.style('z-index', '1');
-        this.moveTaskDownButton.style('z-index', '1');
+        this.menu.moveTaskUpButton.style('z-index', '1');
+        this.menu.moveTaskDownButton.style('z-index', '1');
 
         //sets button position style.
-        this.moveTaskUpButton.style('position', 'absolute');
-        this.moveTaskDownButton.style('position', 'absolute');
+        this.menu.moveTaskUpButton.style('position', 'absolute');
+        this.menu.moveTaskDownButton.style('position', 'absolute');
 
         strokeWeight(0)
         // text slop
