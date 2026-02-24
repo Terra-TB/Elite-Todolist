@@ -21,10 +21,18 @@ class Color {
         return [this.R, this.G, this.B]
     }
 
+    changeColor(red, green, blue) {
+        this.setRed(red)
+        this.setGreen(green)
+        this.setBlue(blue)
+    }
+
     mix(otherColor) {
-        this.setRed((this.R + otherColor.R) / 2)
-        this.setGreen((this.G + otherColor.G) / 2)
-        this.setBlue((this.B + otherColor.B) / 2)
+        let red = (this.R + otherColor.R) / 2
+        let green = (this.G + otherColor.G) / 2
+        let blue = (this.B + otherColor.B) / 2
+
+        this.changeColor(red, green, blue)
     }
     
     copy() {
@@ -33,17 +41,17 @@ class Color {
 
     //you cant get THIS from a NUMBER!
     toInverted() {
-        this.setRed(255 - this.R)
-        this.setGreen(255 - this.G)
-        this.setBlue(255 - this.B)
+        let red = 255 - this.R
+        let green = 255 - this.G
+        let blue = 255 - this.B
+
+        this.changeColor(red, green, blue)
     }
 
     //bad grayscale filter
     toGrayscale() {
         let colorAvg = Math.round((this.R + this.G + this.B) / 3)
 
-        this.setRed(colorAvg)
-        this.setGreen(colorAvg)
-        this.setBlue(colorAvg)
+        this.changeColor(colorAvg)
     }
 }
