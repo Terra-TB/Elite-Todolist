@@ -14,7 +14,7 @@ class Bar{
 
     buttonPressedMakeList(){
 
-        if(listArray[listArray.length - 1].name == "Archive"){
+        if(listArray.length > 0 && listArray[listArray.length - 1].name == "Archive"){
             let temp = listArray[listArray.length - 1]
             listArray.pop()
             listArray.push(getNewList());
@@ -22,7 +22,8 @@ class Bar{
         }else{
             listArray.push(getNewList());
         }
-        
+
+        hideAllMenus()
         refresh();
         saveAllLists();
     }

@@ -134,6 +134,7 @@ class List{
     buttonPressedAddTask(){
         this.addTask(getNewTask())
         //this.addTask(new Task())
+        hideAllMenus()
         refresh();
         saveAllLists();
     }
@@ -150,6 +151,7 @@ class List{
         this.deleteTaskButtons()
         localStorage.clear();
         listArray.splice(listArray.indexOf(this), listArray.indexOf(this)>= 0 ? 1 : 0);
+        hideAllMenus()
         refresh();
         saveAllLists();
     }
@@ -289,6 +291,12 @@ class List{
         for (let index = 0; index < this.listStorage.length; index++) { 
             let task = this.listStorage[index]
             task.show(x + 10, y + (130 * index));
+        }
+    }
+
+    hideTasksMenus(){
+        for(let task of this.listStorage){
+            task.menu.closeMenu();
         }
     }
 

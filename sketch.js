@@ -98,3 +98,8 @@ function styleButton(btn) {
   btn.style("cursor", "pointer");
 }
 
+function hideAllMenus(){
+  for(let list of listArray){
+    list.hideTasksMenus();
+  }
+}

@@ -60,6 +60,8 @@ class Menu {
             }
         }
         console.log(this.id + " was marked as done");
+        list.setTasksPositions()
+        hideAllMenus()
         refresh();
         saveAllLists();
     }
@@ -68,20 +70,25 @@ class Menu {
         let list = this.getListTask();
         this.deleteTaskButtons();
         list.removeTask(this.task);
-        list.setTasksPositions()
-        this.deleteMenu()
+        list.setTasksPositions();
+        this.deleteMenu();
+        hideAllMenus()
         refresh();
         saveAllLists();
     }
 
+    closeMenu(){
+        this.taskMenuOpen = false;
+        this.hideMenuButtons();
+    }
+
     buttonPressedMenu(){
         if(!this.taskMenuOpen){
+            hideAllMenus()
             this.taskMenuOpen = true;
             return;
         }else if(this.taskMenuOpen){
-            this.taskMenuOpen = false;
-
-            this.hideMenuButtons();
+            this.closeMenu();
         }
         
     }
@@ -144,6 +151,7 @@ class Menu {
     editTask(){
         this.task.name = prompt("Input the task name.");
         this.task.description = prompt("Input the tasks description.");
+        hideAllMenus()
     }
 
     slidePosition(direction) {
@@ -157,6 +165,7 @@ class Menu {
 
         list.swapIndex(taskIndex, taskIndex + direction);
         
+        hideAllMenus()
         refresh();
         saveAllLists();
     }
