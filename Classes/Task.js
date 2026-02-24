@@ -66,21 +66,25 @@ const ID_MIN              = 10000
 const ID_MAX              = 99999
 
 class Task {
-    constructor(name, desc, status, position, id) { 
+    constructor(name, desc, status, position, id, bgColor) { 
         this.name        = name     || DEFAULT_TASK_NAME;
         this.description = desc     || DEFAULT_DESCRIPTION;
         this.status      = status   || DEFAULT_STATUS;
         this.position    = position || DEFAULT_POSITION;
         this.finished    =             DEFAULT_FINISHED;  
-        this.id          = id       || GenerateId()     
-        //uncomment this if u prefer this one
-        // this.id          = id       || Math.floor(Date.now() / ((Math.random() * 10000) + 500))
-        this.bgColor = random(BACKGROUND_COLORS).getColor();
+        this.id          = id       || Math.floor(Date.now() / ((Math.random() * 10000) + 500))
+        this.bgColor     = bgColor  || random(BACKGROUND_COLORS);
+        // this.id          = id       || GenerateId()  
 
-        this.id = Math.floor(Date.now() / ((Math.random() * 10000) + 500))
-
-        this.menu = new Menu(0,0, 100, 105,color(this.bgColor[0],this.bgColor[1],this.bgColor[2]), color(STROKE_COLOR.getColor()[0],STROKE_COLOR.getColor()[1],STROKE_COLOR.getColor()[2]), this)
-
+        this.menu = new Menu(
+            0,
+            0, 
+            100, 
+            105,
+            color(this.bgColor.getColor()[0],this.bgColor.getColor()[1],this.bgColor.getColor()[2]), 
+            color(STROKE_COLOR.getColor()[0],STROKE_COLOR.getColor()[1],STROKE_COLOR.getColor()[2]), 
+            this
+        )
     }
 
     //getters and setters
@@ -136,7 +140,8 @@ class Task {
         saveString += this.getDesc() + "|"
         saveString += this.getStatus() + "|"
         saveString += this.getPosition() + "|"
-        saveString += this.getId() + ""
+        saveString += this.getId() + "|"
+        saveString += this.bgColor.toSaveString() + ""
 
         return saveString
     }
@@ -153,7 +158,7 @@ class Task {
         strokeWeight(3)
         stroke(STROKE_COLOR.getColor())
         push();
-        fill(this.bgColor)
+        fill(this.bgColor.getColor())
         rect(x, y, 380, 120, 10);
         pop();
 
@@ -222,8 +227,9 @@ class Task {
     }
 }
 
-let generatedIds = {} //array to store already generated ids (avoids the low chance of getting the same id twice)
-//Generates a random id for the task (probably redundant)
+let generatedIds = [] //array to store already generated ids (avoids the low chance of getting the same id twice)
+
+//Generates a random id for the task
 function GenerateId() {
     let generatedId
     let idValid = false
@@ -234,11 +240,12 @@ function GenerateId() {
         //extra code to make it loop back around if the id is already created (too many lines for such an unlikely problem)
         idValid = true
         for (let id in generatedIds) {
-            if (!(rand == id)) {
+            if (generatedId == id) {
                 console.warn("ID is already created!")
                 continue
             }
             idValid = false
+            generatedIds.push(generatedId)
         }
     }
 

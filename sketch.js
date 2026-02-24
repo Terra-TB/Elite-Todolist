@@ -11,7 +11,7 @@ function setup() {
   menuBar = new Bar(10, 10, windowWidth - 20, 75, 15, 200)
 
   let i = 0;
-  while (localStorage.getItem(i.toString())/* !== null (uncomment if this doesnt work)*/) {
+  while (localStorage.getItem(i.toString())) {
     let list = new List();
     list.loadFromLocalStorage(i.toString());
     listArray.push(list);
@@ -73,8 +73,13 @@ function windowResized() {
 
 function saveAllLists(){
   for(let i = 0; i < listArray.length; i++){
-    listArray[i].pushToLocalStorage(i.toString());
+    saveSingleList(i)
   }
+}
+
+function saveSingleList(index) {
+  let list = listArray[index]
+  list.pushToLocalStorage(index.toString());
 }
 
 function getNewTask(){

@@ -143,23 +143,23 @@ class Menu {
     }
 
     editTask(){
-        this.task.name = prompt("Input the task name.");
-        this.task.description = prompt("Input the tasks description.");
+        this.task.name = prompt("Input the task name:");
+        this.task.description = prompt("Input the task's description:");
     }
 
     slidePosition(direction) {
         let list = this.getListTask();
         const taskIndex = this.task.position
 
-        if(direction != -1 && direction != 1){
-            return;
+        if (direction == 0) { //avoids dividing by zero and other stuff that will break the app
+            return
         }
 
-        if(direction == -1){
-            list.moveDown(taskIndex);
-        }else if(direction == 1){
-            list.moveUp(taskIndex);
+        if(direction != -1 && direction != 1){ //failsafe which isnt needed unless something evil happens
+            throw new error("something evil happened :c pls fix my direction calculation")
         }
+
+        list.move(taskIndex, direction)
         
         refresh();
         saveAllLists();
