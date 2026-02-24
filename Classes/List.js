@@ -72,9 +72,9 @@ class List{
     // this will swap the tasks at index and index + direction (positive or negative 1)
     move(index, direction){
         // do a safety check to avoid index out of range
-        if(index >= this.listStorage.length + direction){
-            return;
-        }
+        // if(index >= this.listStorage.length + direction){
+        //     return;
+        // }
 
         if (direction == 0) { //avoids dividing by zero and other stuff that will break the app
             return
@@ -324,8 +324,9 @@ function convertTaskFromSaveString(saveString) { //generational amount of charac
     let savedStatus   = brokenString[2]
     let savedPosition = parseInt(brokenString[3])
     let savedId       = parseInt(brokenString[4])
+    let savedColor    = parseColor(brokenString[5])
     
     //might be an easier way to do this
-    let newTask = new Task(savedName, savedDesc, savedStatus, savedPosition, savedId) 
+    let newTask = new Task(savedName, savedDesc, savedStatus, savedPosition, savedId, savedColor) 
     return newTask
 }

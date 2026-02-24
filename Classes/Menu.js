@@ -149,8 +149,8 @@ class Menu {
     }
 
     editTask(){
-        this.task.name = prompt("Input the task name.");
-        this.task.description = prompt("Input the tasks description.");
+        this.task.name = prompt("Input the task name:");
+        this.task.description = prompt("Input the task's description:");
         hideAllMenus()
     }
 
@@ -159,11 +159,15 @@ class Menu {
         console.log(list);
         let taskIndex = this.task.position
 
-        if(direction != -1 && direction != 1){
-            return;
+        if (direction == 0) { //avoids dividing by zero and other stuff that will break the app
+            return
         }
 
-        list.swapIndex(taskIndex, taskIndex + direction);
+        if(direction != -1 && direction != 1){ //failsafe which isnt needed unless something evil happens
+            throw new error("something evil happened :c pls fix my direction calculation")
+        }
+
+        list.move(taskIndex, direction)
         
         hideAllMenus()
         refresh();
