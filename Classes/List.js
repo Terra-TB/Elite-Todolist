@@ -38,7 +38,7 @@ class List{
 
     removeTask(task){
         let storage = this.getStorage();
-        const indx = storage.findIndex(t => t.Id === task.Id);
+        const indx = storage.findIndex(t => t.id === task.id);
 
         //remove task
         this.listStorage.splice(indx, indx >= 0 ? 1 : 0);
@@ -57,9 +57,16 @@ class List{
 
     //swap the first index with the second index
     swapIndex(firstIndex, secondIndex){
+
+        if(secondIndex < 0 || secondIndex >= this.listStorage.length){
+            return;
+        }
+
         let temp = this.listStorage[firstIndex]
         this.listStorage[firstIndex] = this.listStorage[secondIndex]
         this.listStorage[secondIndex] = temp;
+
+        this.setTasksPositions()
     }
 
     // this will swap the tasks at index and index + direction (positive or negative 1)
@@ -88,7 +95,7 @@ class List{
         
         this.swapIndex(index, otherTaskIndex);
         this.listStorage[index].setPosition(index);
-        this.listStorage[otherTaskIndex].setPosition(otherTaskIndex);;
+        this.listStorage[otherTaskIndex].setPosition(otherTaskIndex);
     }
 
         // this will swap the tasks at index and index - 1
@@ -101,6 +108,18 @@ class List{
     //     this.listStorage[index - 1].setPosition(index - 1);
     // }
 
+    setTasksPositions(){
+        let storage = this.listStorage;
+        for(let x = 0; x < this.listStorage.length; x++){
+            storage[x].setPosition(x);
+        }
+    }
+
+    /**
+     * 
+     * @param {*} list list to move task to.
+     * @param {*} task task to move from this list.
+     */
     moveTask(list, task){
         list.addTask(task);
         this.removeTask(task);
@@ -115,6 +134,7 @@ class List{
     buttonPressedAddTask(){
         this.addTask(getNewTask())
         //this.addTask(new Task())
+        hideAllMenus()
         refresh();
         saveAllLists();
     }
@@ -131,6 +151,7 @@ class List{
         this.deleteTaskButtons()
         localStorage.clear();
         listArray.splice(listArray.indexOf(this), listArray.indexOf(this)>= 0 ? 1 : 0);
+        hideAllMenus()
         refresh();
         saveAllLists();
     }
@@ -270,6 +291,12 @@ class List{
         for (let index = 0; index < this.listStorage.length; index++) { 
             let task = this.listStorage[index]
             task.show(x + 10, y + (130 * index));
+        }
+    }
+
+    hideTasksMenus(){
+        for(let task of this.listStorage){
+            task.menu.closeMenu();
         }
     }
 

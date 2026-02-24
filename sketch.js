@@ -36,7 +36,7 @@ function setup() {
 
 function draw() {
   background(220);
-  showTasks();
+  showLists()
   menuBar.show();
 }
 
@@ -54,14 +54,14 @@ function refresh(){
   if(listArray.length <= 0){
     return
   }
-  showTasks()
+  showLists()
 }
 
-function showTasks() {
+function showLists() {
   for (let index = 0; index < listArray.length; index++) { //may or may not have forgotten how to use for loops for indices
-    let task = listArray[index]
+    let list = listArray[index]
     let taskPos = X_START + (index * X_PADDING)
-    task.show(taskPos, false) //keeping this false in just to be safe
+    list.show(taskPos, false) //keeping this false in just to be safe
   }
 }
 
@@ -103,3 +103,8 @@ function styleButton(btn) {
   btn.style("cursor", "pointer");
 }
 
+function hideAllMenus(){
+  for(let list of listArray){
+    list.hideTasksMenus();
+  }
+}

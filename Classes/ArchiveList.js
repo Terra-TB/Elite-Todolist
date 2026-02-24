@@ -1,6 +1,7 @@
 class ArchiveList extends List {
     constructor() {
         super("Archive");
+        
     }
 
 
@@ -22,6 +23,7 @@ class ArchiveList extends List {
 
         //shows buttons
         this.deleteListButton.show();
+        this.addTaskButton.remove();
 
         // title
         strokeWeight(0);
@@ -36,8 +38,10 @@ class ArchiveList extends List {
 
         // show all tasks in this list
         if(this.listStorage.length > 0){
-            //console.log("show")
-            this.showTask(70 + verticalOffsetTop)
+            //console.log(this.listStorage[0])
+            let index = listArray.length - 1;
+            let taskPos = X_START + (index * X_PADDING)
+            this.showTasks(taskPos)
         }
     
     }
