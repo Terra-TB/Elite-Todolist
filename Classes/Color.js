@@ -56,18 +56,25 @@ class Color {
 
     //you cant get THIS from a NUMBER!
     toInverted() {
-        let red = 255 - this.R
-        let green = 255 - this.G
-        let blue = 255 - this.B
+        let newColor = this.copy()
 
-        this.changeColor(red, green, blue)
+        let red = 255 - newColor.R
+        let green = 255 - newColor.G
+        let blue = 255 - newColor.B
+
+        newColor.changeColor(red, green, blue)
+
+        return newColor
     }
 
     //bad grayscale filter
     toGrayscale() {
-        let colorAvg = Math.round((this.R + this.G + this.B) / 3)
+        let newColor = this.copy()
 
-        this.changeColor(colorAvg)
+        let colorAvg = Math.round((newColor.R + newColor.G + newColor.B) / 3)
+        newColor.changeColor(colorAvg)
+
+        return newColor
     }
 }
 

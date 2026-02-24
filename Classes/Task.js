@@ -35,7 +35,9 @@ const BACKGROUND_COLORS   = [
     new Color(52, 78, 65)
 ]
 const NAME_COLOR          = new Color()
+const NAME_COLOR_STROKE   = NAME_COLOR.toInverted() 
 const DESC_COLOR          = new Color(100)
+const DESC_COLOR_STROKE   = DESC_COLOR.toInverted()
 const DEFAULT_WHITE       = new Color(255)
 
 const TASK_FILL           = new Color(255)
@@ -180,17 +182,19 @@ class Task {
         this.menu.moveTaskUpButton.style('position', 'absolute');
         this.menu.moveTaskDownButton.style('position', 'absolute');
 
-        strokeWeight(0);
+        strokeWeight(1);
         // text slop
         textFont(TEXT_FONT)
         //name
         textAlign(CENTER, CENTER);
         fill(NAME_COLOR.getColor());
+        stroke(NAME_COLOR_STROKE.getColor())
         textSize(NAME_SIZE);
         text(this.name, x + TEXT_X_OFFSET, y + TEXT_Y_PADDING);
 
         //desc
         fill(DESC_COLOR.getColor());
+        stroke(DESC_COLOR_STROKE.getColor())
         textSize(DESC_SIZE);
         text(this.description, x + TEXT_X_OFFSET, y + TEXT_Y_PADDING * 2);
 
