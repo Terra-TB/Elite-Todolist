@@ -14,7 +14,13 @@ function setup() {
   while (localStorage.getItem(i.toString())) {
     let list = new List();
     list.loadFromLocalStorage(i.toString());
-    listArray.push(list);
+    if (list.name === "Archive") {
+      let archive = new ArchiveList()
+      archive.loadFromLocalStorage(i.toString());
+      listArray.push(archive);
+    } else {
+      listArray.push(list);
+    }
     i++;
   }
 
@@ -90,7 +96,11 @@ function getNewTask(){
 
 function getNewList(){
     let name =  prompt("Input the list name:");
-    return new List(name);
+    if (name === "Archive") {
+      return new ArchiveList();
+    } else {
+      return new List(name);
+    }
 }
 
 function styleButton(btn) {
