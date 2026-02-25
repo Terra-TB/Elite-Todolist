@@ -27,11 +27,11 @@ class Menu {
 
         this.moveTaskUpButton = createButton(`⬆️`);
         this.moveTaskUpButton.hide();
-        this.moveTaskUpButton.mousePressed(() => this.slidePosition(-1));
+        this.moveTaskUpButton.mousePressed(() => this.slidePosition(1));
         
         this.moveTaskDownButton = createButton(`⬇️`);
         this.moveTaskDownButton.hide();
-        this.moveTaskDownButton.mousePressed(() => this.slidePosition(1));
+        this.moveTaskDownButton.mousePressed(() => this.slidePosition(-1));
 
         this.menuButton = createButton(`≡`);
         this.menuButton.hide();
@@ -124,33 +124,64 @@ class Menu {
         this.markTaskDoneButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 7);
         this.editTaskButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 30);
         this.deleteTaskButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 53);
+        this.moveTaskUpButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 76);
+        this.moveTaskDownButton.position(pos.x + MENU_X_OFFSET + 41, pos.y + MENU_Y_OFFSET + 76);
 
         //show move task up/down buttons
         this.markTaskDoneButton.show();
         this.editTaskButton.show();
         this.deleteTaskButton.show();
+        this.moveTaskUpButton.show();
+        this.moveTaskDownButton.show();
 
         //menu buttons style.
         this.markTaskDoneButton.style('z-index', '3');
         this.editTaskButton.style('z-index', '3');
         this.deleteTaskButton.style('z-index', '3');
+        this.moveTaskUpButton.style('z-index', '3');
+        this.moveTaskDownButton.style('z-index', '3');
 
         //menu buttons position style.
         this.markTaskDoneButton.style('position', 'absolute');
         this.editTaskButton.style('position', 'absolute');
         this.deleteTaskButton.style('position', 'absolute');
+        this.moveTaskUpButton.style('position', 'absolute');
+        this.moveTaskDownButton.style('position', 'absolute');
     }
 
     hideMenuButtons(){
         this.markTaskDoneButton.hide();
         this.deleteTaskButton.hide();
         this.editTaskButton.hide();
+        this.moveTaskUpButton.hide();
+        this.moveTaskDownButton.hide();
         this.mainBox.hide();
     }
 
     editTask(){
-        this.task.name = prompt("Input the task name:");
-        this.task.description = prompt("Input the task's description:");
+        let editName = prompt("Input new task name:", this.task.name);
+        switch(editName){
+            case null:
+                return;
+            break;
+
+            default:
+                this.task.name = editName;
+                saveAllLists();
+        }
+
+        let editDesc = prompt("Input new task description:", this.task.description);
+        switch(editDesc){
+            case null:
+                saveAllLists();
+                return;
+            break;
+
+            default:
+                this.task.description = editDesc;
+                saveAllLists();
+        }
+        
         hideAllMenus();
     }
 
