@@ -149,10 +149,30 @@ class Menu {
     }
 
     editTask(){
-        this.task.name = prompt("Input the task name:");
-        this.task.description = prompt("Input the task's description:");
+        let editName = prompt("Input new task name:", this.task.name);
+        switch(editName){
+            case null:
+                return;
+            break;
+
+            default:
+                this.task.name = editName;
+                saveAllLists();
+        }
+
+        let editDesc = prompt("Input new task description:", this.task.description);
+        switch(editDesc){
+            case null:
+                saveAllLists();
+                return;
+            break;
+
+            default:
+                this.task.description = editDesc;
+                saveAllLists();
+        }
+        
         hideAllMenus();
-        saveAllLists();
     }
 
     slidePosition(direction) {
