@@ -1,6 +1,6 @@
 let listArray   = [];
 const X_START   = 10;
-const X_PADDING = 410
+const X_PADDING = 410;
 let menuBar;
 // sorry i couldnt think of a better solution for spacing them out
 // well actually i probably could but minimum viable product yknow
@@ -8,7 +8,7 @@ let menuBar;
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  menuBar = new Bar(10, 10, windowWidth - 20, 75, 15, 200)
+  menuBar = new Bar(10, 10, windowWidth - 20, 75, 15, 200);
 
   let i = 0;
   while (localStorage.getItem(i.toString())) {
@@ -36,7 +36,7 @@ function setup() {
 
 function draw() {
   background(220);
-  showLists()
+  showLists();
   menuBar.show();
 }
 
@@ -45,23 +45,23 @@ function draw() {
 //   x = 10;
 //   for (const each of listArray) {
 //     each.show(x, true);
-//     x += 410
+//     x += 410;
 //   }
 // }
 
 function refresh(){
   background(220);
   if(listArray.length <= 0){
-    return
+    return;
   }
-  showLists()
+  showLists();
 }
 
 function showLists() {
   for (let index = 0; index < listArray.length; index++) { //may or may not have forgotten how to use for loops for indices
-    let list = listArray[index]
-    let taskPos = X_START + (index * X_PADDING)
-    list.show(taskPos, false) //keeping this false in just to be safe
+    let list = listArray[index];
+    let taskPos = X_START + (index * X_PADDING);
+    list.show(taskPos, false); //keeping this false in just to be safe
   }
 }
 
@@ -73,12 +73,12 @@ function windowResized() {
 
 function saveAllLists(){
   for(let i = 0; i < listArray.length; i++){
-    saveSingleList(i)
+    saveSingleList(i);
   }
 }
 
 function saveSingleList(index) {
-  let list = listArray[index]
+  let list = listArray[index];
   list.pushToLocalStorage(index.toString());
 }
 

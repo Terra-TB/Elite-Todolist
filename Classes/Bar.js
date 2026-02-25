@@ -5,7 +5,7 @@ class Bar{
         this.width = init_width;
         this.height = init_height;
         this.cornerCouverture = init_cornerCouverture;
-        this.color = init_color
+        this.color = init_color;
 
         this.addListButton = createButton(`Add list`);
         this.addListButton.hide();
@@ -15,15 +15,15 @@ class Bar{
     buttonPressedMakeList(){
 
         if(listArray.length > 0 && listArray[listArray.length - 1].name == "Archive"){
-            let temp = listArray[listArray.length - 1]
-            listArray.pop()
+            let temp = listArray[listArray.length - 1];
+            listArray.pop();
             listArray.push(getNewList());
             listArray.push(temp);
         }else{
             listArray.push(getNewList());
         }
 
-        hideAllMenus()
+        hideAllMenus();
         refresh();
         saveAllLists();
     }
@@ -36,14 +36,14 @@ class Bar{
 
         
         //sets pos of buttons
-        let xOffest = 40
-        let yOffest = this.height/4
+        let xOffest = 40;
+        let yOffest = this.height/4;
         this.addListButton.position(this.x + xOffest, this.y + yOffest);
 
         this.addListButton.style("padding", "12px 20px"); 
         this.addListButton.style("font-size", "20px"); 
 
-        styleButton(this.addListButton)
+        styleButton(this.addListButton);
         //shows buttons
         this.addListButton.show();
     }

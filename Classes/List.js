@@ -42,11 +42,6 @@ class List{
 
         //remove task
         this.listStorage.splice(indx, indx >= 0 ? 1 : 0);
-
-        //move to archive
-        //todo
-
-        // ^ i dont really think we should, this works fine
     }
 
     getNewTask(){
@@ -62,11 +57,11 @@ class List{
             return;
         }
 
-        let temp = this.listStorage[firstIndex]
-        this.listStorage[firstIndex] = this.listStorage[secondIndex]
+        let temp = this.listStorage[firstIndex];
+        this.listStorage[firstIndex] = this.listStorage[secondIndex];
         this.listStorage[secondIndex] = temp;
 
-        this.setTasksPositions()
+        this.setTasksPositions();
     }
 
     // this will swap the tasks at index and index + direction (positive or negative 1)
@@ -132,9 +127,9 @@ class List{
     }
     
     buttonPressedAddTask(){
-        this.addTask(getNewTask())
-        //this.addTask(new Task())
-        hideAllMenus()
+        this.addTask(getNewTask());
+        //this.addTask(new Task());
+        hideAllMenus();
         refresh();
         saveAllLists();
     }
@@ -172,13 +167,13 @@ class List{
     toSaveString() {
         let saveString = "";
 
-        let listName = this.getName()
+        let listName = this.getName();
         console.log(`List being saved: ${listName}`);
         saveString += listName; //will always be 0 on split (hypothetically)
 
         for (let task of this.getStorage()) {
             console.log(`Task being saved: ${task.getName()}`);
-            saveString += "&"
+            saveString += "&";
             saveString += task.toSaveString();
         }
 
@@ -209,7 +204,7 @@ class List{
         this.listStorage = [];
 
         if (!brokenString[1]) { //early return if there arent any more values (saved list is empty)
-            return;
+            return
         }
         for (let taskNum = 1; taskNum < brokenString.length; taskNum++) {
             let taskSave = brokenString[taskNum];
@@ -269,7 +264,7 @@ class List{
 
         // title
         strokeWeight(0);
-        textFont(TEXT_FONT)
+        textFont(TEXT_FONT);
         textAlign(CENTER, CENTER);
         textSize(24);
         fill(LIST_TITLE_COLOR.getColor());
@@ -281,7 +276,7 @@ class List{
         // show all tasks in this list
         if(this.listStorage.length > 0){
             //console.log("show");
-            this.showTasks(x);
+            this.showTasks(x)
         }
     }
 
@@ -302,7 +297,7 @@ class List{
 
 
 //     showTask(y){
-//         let taskSpacing = 150;// has to be < 130
+//         let taskSpacing = 150;// has to be < 130;
 //         for (let each of this.listStorage) {
 //             each.show(x + 10, y);
 //             y += taskSpacing;
@@ -319,14 +314,14 @@ class List{
 function convertTaskFromSaveString(saveString) { //generational amount of characters
     let brokenString = saveString.split("|"); //Name, Desc, Status, Position, Id in that order
 
-    let savedName     = brokenString[0]
-    let savedDesc     = brokenString[1]
-    let savedStatus   = brokenString[2]
-    let savedPosition = parseInt(brokenString[3])
-    let savedId       = parseInt(brokenString[4])
-    let savedColor    = parseColor(brokenString[5])
+    let savedName     = brokenString[0];
+    let savedDesc     = brokenString[1];
+    let savedStatus   = brokenString[2];
+    let savedPosition = parseInt(brokenString[3]);
+    let savedId       = parseInt(brokenString[4]);
+    let savedColor    = parseColor(brokenString[5]);
     
     //might be an easier way to do this
-    let newTask = new Task(savedName, savedDesc, savedStatus, savedPosition, savedId, savedColor) 
-    return newTask
+    let newTask = new Task(savedName, savedDesc, savedStatus, savedPosition, savedId, savedColor) ;
+    return newTask;
 }

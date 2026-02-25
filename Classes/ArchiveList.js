@@ -27,7 +27,7 @@ class ArchiveList extends List {
 
         // title
         strokeWeight(0);
-        textFont(TEXT_FONT)
+        textFont(TEXT_FONT);
         textAlign(CENTER, CENTER);
         textSize(24);
         fill(0);
@@ -40,8 +40,8 @@ class ArchiveList extends List {
         if(this.listStorage.length > 0){
             //console.log(this.listStorage[0])
             let index = listArray.length - 1;
-            let taskPos = X_START + (index * X_PADDING)
-            this.showTasks(taskPos)
+            let taskPos = X_START + (index * X_PADDING);
+            this.showTasks(taskPos);
         }
     
     }

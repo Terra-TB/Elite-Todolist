@@ -1,6 +1,6 @@
 //menu offset
-const MENU_X_OFFSET = 370
-const MENU_Y_OFFSET = 6
+const MENU_X_OFFSET = 370;
+const MENU_Y_OFFSET = 6;
 
 class Menu {
 
@@ -60,8 +60,8 @@ class Menu {
             }
         }
         console.log(this.id + " was marked as done");
-        list.setTasksPositions()
-        hideAllMenus()
+        list.setTasksPositions();
+        hideAllMenus();
         refresh();
         saveAllLists();
     }
@@ -72,7 +72,7 @@ class Menu {
         list.removeTask(this.task);
         list.setTasksPositions();
         this.deleteMenu();
-        hideAllMenus()
+        hideAllMenus();
         refresh();
         saveAllLists();
     }
@@ -114,10 +114,10 @@ class Menu {
         this.mainBox.position(this.x + MENU_X_OFFSET, this.y + MENU_Y_OFFSET);
         this.mainBox.style(`width: ${[this.width]}px`);
         this.mainBox.style(`height: ${[this.height]}px`);
-        this.mainBox.style("z-index: 2")
-        this.mainBox.style(`background-color: ${[this.bgColor]}`)
-        this.mainBox.style(`border: 5px solid ${[this.borderColor]}`)
-        this.mainBox.style(`border-radius: 10px`)
+        this.mainBox.style("z-index: 2");
+        this.mainBox.style(`background-color: ${[this.bgColor]}`);
+        this.mainBox.style(`border: 5px solid ${[this.borderColor]}`);
+        this.mainBox.style(`border-radius: 10px`);
         this.mainBox.show();
 
         // sets pos of buttons        
@@ -151,25 +151,25 @@ class Menu {
     editTask(){
         this.task.name = prompt("Input the task name:");
         this.task.description = prompt("Input the task's description:");
-        hideAllMenus()
+        hideAllMenus();
     }
 
     slidePosition(direction) {
         let list = this.getListTask();
         console.log(list);
-        let taskIndex = this.task.position
+        let taskIndex = this.task.position;
 
         if (direction == 0) { //avoids dividing by zero and other stuff that will break the app
-            return
+            return;
         }
 
         if(direction != -1 && direction != 1){ //failsafe which isnt needed unless something evil happens
             throw new error("something evil happened :c pls fix my direction calculation")
         }
 
-        list.move(taskIndex, direction)
+        list.move(taskIndex, direction);
         
-        hideAllMenus()
+        hideAllMenus();
         refresh();
         saveAllLists();
     }

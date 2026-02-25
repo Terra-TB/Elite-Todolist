@@ -33,12 +33,12 @@ const BACKGROUND_COLORS   = [
     new Color(60, 110, 113), 
     new Color(58, 90, 64), 
     new Color(52, 78, 65)
-]
-const NAME_COLOR          = new Color()
-const NAME_COLOR_STROKE   = NAME_COLOR.toInverted() 
-const DESC_COLOR          = new Color(100)
-const DESC_COLOR_STROKE   = DESC_COLOR.toInverted()
-const DEFAULT_WHITE       = new Color(255)
+];
+const NAME_COLOR          = new Color();
+const NAME_COLOR_STROKE   = NAME_COLOR.toInverted() ;
+const DESC_COLOR          = new Color(100);
+const DESC_COLOR_STROKE   = DESC_COLOR.toInverted();
+const DEFAULT_WHITE       = new Color(255);
 
 const TASK_FILL           = new Color(255);
 const STROKE_COLOR        = new Color(100, 230, 255);
@@ -74,9 +74,9 @@ class Task {
         this.status      = status   || DEFAULT_STATUS;
         this.position    = position || DEFAULT_POSITION;
         this.finished    =             DEFAULT_FINISHED;  
-        this.id          = id       || Math.floor(Date.now() / ((Math.random() * 10000) + 500))
+        this.id          = id       || Math.floor(Date.now() / ((Math.random() * 10000) + 500));
         this.bgColor     = bgColor  || random(BACKGROUND_COLORS);
-        // this.id          = id       || GenerateId()  
+        // this.id          = id       || GenerateId();  
 
         this.menu = new Menu(
             0,
@@ -86,7 +86,7 @@ class Task {
             color(this.bgColor.getColor()[0],this.bgColor.getColor()[1],this.bgColor.getColor()[2]), 
             color(STROKE_COLOR.getColor()[0],STROKE_COLOR.getColor()[1],STROKE_COLOR.getColor()[2]), 
             this
-        )
+        );
     }
 
     //getters and setters
@@ -136,19 +136,19 @@ class Task {
     }
 
    toSaveString() {
-        let saveString = ""
+        let saveString = "";
 
-        saveString += this.getName() + "|"
-        saveString += this.getDesc() + "|"
-        saveString += this.getStatus() + "|"
-        saveString += this.getPosition() + "|"
-        saveString += this.getId() + "|"
-        saveString += this.bgColor.toSaveString() + ""
+        saveString += this.getName() + "|";
+        saveString += this.getDesc() + "|";
+        saveString += this.getStatus() + "|";
+        saveString += this.getPosition() + "|";
+        saveString += this.getId() + "|";
+        saveString += this.bgColor.toSaveString() + "";
 
         return saveString;
     }
   
-    show(x, y, ) {
+    show(x, y) {
 
         this.x = x; // why is show (an accessor method) changing instance variables like a setter method?????
         this.y = y;
@@ -158,9 +158,9 @@ class Task {
 
         // main box
         strokeWeight(3)
-        stroke(STROKE_COLOR.getColor())
+        stroke(STROKE_COLOR.getColor());
         push();
-        fill(this.bgColor.getColor())
+        fill(this.bgColor.getColor());
         rect(x, y, 380, 120, 10);
         pop();
 
@@ -188,13 +188,13 @@ class Task {
         //name
         textAlign(CENTER, CENTER);
         fill(NAME_COLOR.getColor());
-        stroke(NAME_COLOR_STROKE.getColor())
+        stroke(NAME_COLOR_STROKE.getColor());
         textSize(NAME_SIZE);
         text(this.name, x + TEXT_X_OFFSET, y + TEXT_Y_PADDING);
 
         //desc
         fill(DESC_COLOR.getColor());
-        stroke(DESC_COLOR_STROKE.getColor())
+        stroke(DESC_COLOR_STROKE.getColor());
         textSize(DESC_SIZE);
         text(this.description, x + TEXT_X_OFFSET, y + TEXT_Y_PADDING * 2);
 
@@ -233,7 +233,7 @@ class Task {
     }
 }
 
-let generatedIds = [] //array to store already generated ids (avoids the low chance of getting the same id twice)
+let generatedIds = []; //array to store already generated ids (avoids the low chance of getting the same id twice)
 
 //Generates a random id for the task
 function GenerateId() {
@@ -247,11 +247,11 @@ function GenerateId() {
         idValid = true;
         for (let id in generatedIds) {
             if (generatedId == id) {
-                console.warn("ID is already created!")
-                continue
+                console.warn("ID is already created!");
+                continue;
             }
-            idValid = false
-            generatedIds.push(generatedId)
+            idValid = false;
+            generatedIds.push(generatedId);
         }
     }
 
