@@ -18,65 +18,65 @@ class Color {
 
     //instead of passing in numbers for the color() thing pass this in (yes this is tested and works)
     getColor() {
-        return [this.R, this.G, this.B]
+        return [this.R, this.G, this.B];
     }
 
     toSaveString() {
-        let output = ""
+        let output = "";
 
-        output += this.R + ","
-        output += this.G + ","
-        output += this.B
+        output += this.R + ",";
+        output += this.G + ",";
+        output += this.B;
 
-        return output
+        return output;
     }
 
     changeColor(red, green, blue) {
-        this.setRed(red)
-        this.setGreen(green)
-        this.setBlue(blue)
+        this.setRed(red);
+        this.setGreen(green);
+        this.setBlue(blue);
     }
 
     mix(otherColor, mixStrength) {
-        mixStrength = Math.abs(mixStrength % 1)
-        let mixStrengthOther = (1 - mixStrength)
+        mixStrength = Math.abs(mixStrength % 1);
+        let mixStrengthOther = (1 - mixStrength);
 
         if (mixStrength == 0 || mixStrengthOther == 0) { //avoid dividing by zero
             throw new error("Mix failed :c (dividing by 0)");
         } 
 
-        let red = (this.R * mixStrength) + (otherColor.R * mixStrengthOther)
-        let green = (this.G * mixStrength) + (otherColor.G * mixStrengthOther)
-        let blue = (this.B * mixStrength) + (otherColor.B * mixStrengthOther)
+        let red = (this.R * mixStrength) + (otherColor.R * mixStrengthOther);
+        let green = (this.G * mixStrength) + (otherColor.G * mixStrengthOther);
+        let blue = (this.B * mixStrength) + (otherColor.B * mixStrengthOther);
 
-        this.changeColor(red, green, blue)
+        this.changeColor(red, green, blue);
     }
     
     copy() {
-        return new Color(this.R, this.G, this.B)
+        return new Color(this.R, this.G, this.B);
     }
 
     //you cant get THIS from a NUMBER!
     toInverted() {
-        let newColor = this.copy()
+        let newColor = this.copy();
 
-        let red = 255 - newColor.R
-        let green = 255 - newColor.G
-        let blue = 255 - newColor.B
+        let red = 255 - newColor.R;
+        let green = 255 - newColor.G;
+        let blue = 255 - newColor.B;
 
-        newColor.changeColor(red, green, blue)
+        newColor.changeColor(red, green, blue);
 
-        return newColor
+        return newColor;
     }
 
     //bad grayscale filter
     toGrayscale() {
-        let newColor = this.copy()
+        let newColor = this.copy();
 
-        let colorAvg = Math.round((newColor.R + newColor.G + newColor.B) / 3)
-        newColor.changeColor(colorAvg)
+        let colorAvg = Math.round((newColor.R + newColor.G + newColor.B) / 3);
+        newColor.changeColor(colorAvg);
 
-        return newColor
+        return newColor;
     }
 
     //just invert but darker, nothing else i can do
@@ -100,10 +100,10 @@ class Color {
 
 function parseColor(colorString) {
     if (!colorString) {
-        return
+        return;
     }
 
-    let brokenString = colorString.split(",")
+    let brokenString = colorString.split(",");
 
-    return new Color(brokenString[0], brokenString[1], brokenString[2])
+    return new Color(brokenString[0], brokenString[1], brokenString[2]);
 }

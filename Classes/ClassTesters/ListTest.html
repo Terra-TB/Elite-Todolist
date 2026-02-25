@@ -22,36 +22,36 @@
             let condition = expected == actual
 
             if (!condition) {
-                console.warn("❌ Assertion failed: " + assertMsg)
-                return
+                console.warn("❌ Assertion failed: " + assertMsg);
+                return;
             }
-            console.log("✅ Assertion Passed: " + assertMsg) //comment this out if its useless or something
+            console.log("✅ Assertion Passed: " + assertMsg); //comment this out if its useless or something
         }
 
         function TestBlank() {
             let blank = new List();
 
-            AssertEqual("New List", blank.getName())
-            AssertEqual(JSON.stringify([]), JSON.stringify(blank.getStorage()))
+            AssertEqual("New List", blank.getName());
+            AssertEqual(JSON.stringify([]), JSON.stringify(blank.getStorage()));
         }
 
         //assuming that task works properly (i might be making ming look ridiculous)
         function TestTaskAdded() {
-            let singleTask = new List("The One Piece!!!")
-            let onePiece = new Task("The One Piece is real!!!", "Can't we get much higher")
+            let singleTask = new List("The One Piece!!!");
+            let onePiece = new Task("The One Piece is real!!!", "Can't we get much higher");
 
-            singleTask.addTask(onePiece)
+            singleTask.addTask(onePiece);
 
-            let storage = singleTask.getStorage()
+            let storage = singleTask.getStorage();
 
-            AssertEqual(onePiece, storage[0])
-            AssertEqual(1, storage.length)
+            AssertEqual(onePiece, storage[0]);
+            AssertEqual(1, storage.length);
         }
 
         //TODO: add more tests
         function setup() { // p5js setup function
-            TestBlank()
-            TestTaskAdded()
+            TestBlank();
+            TestTaskAdded();
         }
     </script>
 </body>

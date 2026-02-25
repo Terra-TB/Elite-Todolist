@@ -1,6 +1,6 @@
 //menu offset
-const MENU_X_OFFSET = 370
-const MENU_Y_OFFSET = 6
+const MENU_X_OFFSET = 370;
+const MENU_Y_OFFSET = 6;
 
 class Menu {
 
@@ -27,11 +27,11 @@ class Menu {
 
         this.moveTaskUpButton = createButton(`⬆️`);
         this.moveTaskUpButton.hide();
-        this.moveTaskUpButton.mousePressed(() => this.slidePosition(-1));
-
+        this.moveTaskUpButton.mousePressed(() => this.slidePosition(1));
+        
         this.moveTaskDownButton = createButton(`⬇️`);
         this.moveTaskDownButton.hide();
-        this.moveTaskDownButton.mousePressed(() => this.slidePosition(1));
+        this.moveTaskDownButton.mousePressed(() => this.slidePosition(-1));
 
         this.menuButton = createButton(`≡`);
         this.menuButton.hide();
@@ -72,7 +72,7 @@ class Menu {
         list.removeTask(this.task);
         list.setTasksPositions();
         this.deleteMenu();
-        hideAllMenus()
+        hideAllMenus();
         refresh();
         saveAllLists();
     }
@@ -114,44 +114,75 @@ class Menu {
         this.mainBox.position(this.x + MENU_X_OFFSET, this.y + MENU_Y_OFFSET);
         this.mainBox.style(`width: ${[this.width]}px`);
         this.mainBox.style(`height: ${[this.height]}px`);
-        this.mainBox.style("z-index: 2")
-        this.mainBox.style(`background-color: ${[this.bgColor]}`)
-        this.mainBox.style(`border: 5px solid ${[this.borderColor]}`)
-        this.mainBox.style(`border-radius: 10px`)
+        this.mainBox.style("z-index: 2");
+        this.mainBox.style(`background-color: ${[this.bgColor]}`);
+        this.mainBox.style(`border: 5px solid ${[this.borderColor]}`);
+        this.mainBox.style(`border-radius: 10px`);
         this.mainBox.show();
 
         // sets pos of buttons        
         this.markTaskDoneButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 7);
         this.editTaskButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 30);
         this.deleteTaskButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 53);
+        this.moveTaskUpButton.position(pos.x + MENU_X_OFFSET + 7, pos.y + MENU_Y_OFFSET + 76);
+        this.moveTaskDownButton.position(pos.x + MENU_X_OFFSET + 41, pos.y + MENU_Y_OFFSET + 76);
 
         //show move task up/down buttons
         this.markTaskDoneButton.show();
         this.editTaskButton.show();
         this.deleteTaskButton.show();
+        this.moveTaskUpButton.show();
+        this.moveTaskDownButton.show();
 
         //menu buttons style.
         this.markTaskDoneButton.style('z-index', '3');
         this.editTaskButton.style('z-index', '3');
         this.deleteTaskButton.style('z-index', '3');
+        this.moveTaskUpButton.style('z-index', '3');
+        this.moveTaskDownButton.style('z-index', '3');
 
         //menu buttons position style.
         this.markTaskDoneButton.style('position', 'absolute');
         this.editTaskButton.style('position', 'absolute');
         this.deleteTaskButton.style('position', 'absolute');
+        this.moveTaskUpButton.style('position', 'absolute');
+        this.moveTaskDownButton.style('position', 'absolute');
     }
 
     hideMenuButtons() {
         this.markTaskDoneButton.hide();
         this.deleteTaskButton.hide();
         this.editTaskButton.hide();
+        this.moveTaskUpButton.hide();
+        this.moveTaskDownButton.hide();
         this.mainBox.hide();
     }
 
-    editTask() {
-        this.task.name = prompt("Input the task name:");
-        this.task.description = prompt("Input the task's description:");
-        hideAllMenus()
+    editTask(){
+        let editName = prompt("Input new task name:", this.task.name);
+        switch(editName){
+            case null:
+                return;
+            break;
+
+            default:
+                this.task.name = editName;
+                saveAllLists();
+        }
+
+        let editDesc = prompt("Input new task description:", this.task.description);
+        switch(editDesc){
+            case null:
+                saveAllLists();
+                return;
+            break;
+
+            default:
+                this.task.description = editDesc;
+                saveAllLists();
+        }
+        
+        hideAllMenus();
     }
 
     slidePosition(direction) {
@@ -160,16 +191,16 @@ class Menu {
         let taskIndex = this.task.position
 
         if (direction == 0) { //avoids dividing by zero and other stuff that will break the app
-            return
+            return;
         }
 
         if (direction != -1 && direction != 1) { //failsafe which isnt needed unless something evil happens
             throw new error("something evil happened :c pls fix my direction calculation")
         }
 
-        list.move(taskIndex, direction)
-
-        hideAllMenus()
+        list.move(taskIndex, direction);
+        
+        hideAllMenus();
         refresh();
         saveAllLists();
     }
