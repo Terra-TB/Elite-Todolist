@@ -165,22 +165,10 @@ class Task {
         pop();
 
         // sets pos of buttons        
-        this.menu.moveTaskUpButton.position(x + 10, y+7);
-        this.menu.moveTaskDownButton.position(x + 10, y+90);
         this.menu.menuButton.position(x + 345, y + 7);
 
         //show move task up/down buttons
-        this.menu.moveTaskUpButton.show();
-        this.menu.moveTaskDownButton.show();
         this.menu.menuButton.show();
-
-        //sets button styles.
-        this.menu.moveTaskUpButton.style('z-index', '1');
-        this.menu.moveTaskDownButton.style('z-index', '1');
-
-        //sets button position style.
-        this.menu.moveTaskUpButton.style('position', 'absolute');
-        this.menu.moveTaskDownButton.style('position', 'absolute');
 
         strokeWeight(1);
         // text slop
