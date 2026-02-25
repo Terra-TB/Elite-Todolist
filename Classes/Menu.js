@@ -27,11 +27,11 @@ class Menu {
 
         this.moveTaskUpButton = createButton(`⬆️`);
         this.moveTaskUpButton.hide();
-        this.moveTaskUpButton.mousePressed(() => this.slidePosition(-1));
+        this.moveTaskUpButton.mousePressed(() => this.slidePosition(1));
         
         this.moveTaskDownButton = createButton(`⬇️`);
         this.moveTaskDownButton.hide();
-        this.moveTaskDownButton.mousePressed(() => this.slidePosition(1));
+        this.moveTaskDownButton.mousePressed(() => this.slidePosition(-1));
 
         this.menuButton = createButton(`≡`);
         this.menuButton.hide();
