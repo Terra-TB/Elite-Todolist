@@ -15,16 +15,6 @@ class ArchiveList extends List {
         
         rect(x, verticalOffsetTop, 400, windowHeight - verticalOffsetBottom, 15);
 
-        //sets pos of buttons
-        this.deleteListButton.position(x + 290, verticalOffsetTop + 10);
-
-        styleButton(this.deleteListButton); 
-
-
-        //shows buttons
-        this.deleteListButton.show();
-        this.addTaskButton.remove();
-
         // title
         strokeWeight(0);
         textFont(TEXT_FONT);
