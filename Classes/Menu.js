@@ -32,7 +32,7 @@ class Menu {
         this.moveTaskUpButton = createButton(`⬆️`);
         this.moveTaskUpButton.hide();
         this.moveTaskUpButton.mousePressed(() => this.slidePosition(1));
-        
+
         this.moveTaskDownButton = createButton(`⬇️`);
         this.moveTaskDownButton.hide();
         this.moveTaskDownButton.mousePressed(() => this.slidePosition(-1));
@@ -199,8 +199,14 @@ class Menu {
         this.mainBox.style(`width: ${[this.width]}px`);
         this.mainBox.style(`height: ${[this.height]}px`);
         this.mainBox.style("z-index: 2");
-        this.mainBox.style(`background-color: ${[this.bgColor]}`);
-        this.mainBox.style(`border: 5px solid ${[this.borderColor]}`);
+        if (theme === "default") {
+            this.mainBox.style(`background-color: ${[color(this.bgColor.getColor()[0], this.bgColor.getColor()[1], this.bgColor.getColor()[2])]}`);
+            this.mainBox.style(`border: 3px solid ${[color(this.borderColor.getColor()[0], this.borderColor.getColor()[1], this.borderColor.getColor()[2])]}`);
+        } else if (theme === "dark") {
+            this.mainBox.style(`background-color: ${[color(this.bgColor.toDarkMode().getColor()[0], this.bgColor.toDarkMode().getColor()[1], this.bgColor.toDarkMode().getColor()[2])]}`);
+            this.mainBox.style(`border: 3px solid ${[color(this.borderColor.getColor()[0], this.borderColor.getColor()[1], this.borderColor.getColor()[2])]}`);
+        }
+
         this.mainBox.style(`border-radius: 10px`);
         this.mainBox.show();
 
@@ -296,7 +302,7 @@ class Menu {
         switch(editName){
             case null:
                 return;
-            break;
+                break;
 
             default:
                 this.parent.name = editName;
@@ -308,13 +314,13 @@ class Menu {
             case null:
                 saveAllLists();
                 return;
-            break;
+                break;
 
             default:
                 this.parent.description = editDesc;
                 saveAllLists();
         }
-        
+
         hideAllMenus();
     }
 
@@ -332,7 +338,7 @@ class Menu {
         }
 
         list.move(taskIndex, direction);
-        
+
         hideAllMenus();
         refresh();
         saveAllLists();
