@@ -1,4 +1,4 @@
-const DEFAULT_PALETTE_NAME = "Default" //TODO: add a way for the user to change the theme themselves
+const DEFAULT_PALETTE_NAME = "default" //TODO: add a way for the user to change the theme themselves
 
 class ColorPalette {
     constructor(lTextP, lBg, lB, eBg, eS, eTextP, eTextS, bg, font) { //ik how much i stress readability but i am NOT typing allat
@@ -110,6 +110,28 @@ const PresetPalettes = {
         new Color(255, 0, 0),
         new Color(194, 0, 0),
         new Color(),
+        "Arial"
+    ),
+    "Red.": new ColorPalette(
+        new Color(255, 0, 0),
+        new Color(255, 0, 0),
+        new Color(255, 0, 0),
+        new Color(255, 0, 0),
+        new Color(255, 0, 0),
+        new Color(255, 0, 0),
+        new Color(255, 0, 0),
+        new Color(255, 0, 0),
+        "Arial"
+    ),
+    SuperGreenMode: new ColorPalette(
+        new Color(0, 255, 0),
+        new Color(0, 255, 0),
+        new Color(0, 255, 0),
+        new Color(0, 255, 0),
+        new Color(0, 255, 0),
+        new Color(0, 255, 0),
+        new Color(0, 255, 0),
+        new Color(0, 255, 0),
         "Arial"
     )
 }

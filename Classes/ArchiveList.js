@@ -16,6 +16,7 @@ class ArchiveList extends List {
             fill(LIST_BACKGROUND_COLOR.toDarkMode().getColor());
         }
         // box
+        strokeWeight(5);
         let verticalOffsetTop = 100;
         let verticalOffsetBottom = 125;
 
@@ -38,12 +39,10 @@ class ArchiveList extends List {
         textAlign(CENTER, CENTER);
       
        
-        
+        strokeWeight(0);
         if (theme === "default") {
-            strokeWeight(0);
             fill(LIST_TITLE_COLOR.getColor());
         } else if (theme === "dark") {
-            strokeWeight(3);
             fill(LIST_TITLE_COLOR.toDarkMode().getColor());
         }
         textSize(24);

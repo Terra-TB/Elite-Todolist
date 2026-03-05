@@ -245,10 +245,8 @@ class List {
         textFont(TEXT_FONT);
         textAlign(CENTER, CENTER);
         if (theme === "default") {
-            strokeWeight(0);
             fill(LIST_TITLE_COLOR.getColor());
         } else if (theme === "dark") {
-            strokeWeight(3);
             fill(LIST_TITLE_COLOR.toDarkMode().getColor());
         }
         textSize(24);
