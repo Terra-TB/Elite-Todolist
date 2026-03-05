@@ -2,7 +2,7 @@
 const MENU_X_OFFSET = 370;
 const MENU_Y_OFFSET = 6;
 
-const LIST_MENU_X_OFFSET = 405;
+const LIST_MENU_X_OFFSET = 395;
 const LIST_MENU_Y_OFFSET = 105;
 
 class Menu {
@@ -239,10 +239,10 @@ class Menu {
             return;
         }
 
-        const pos = { x: this.x, y: this.y };
+        const pos = { x: this.parent.x, y: this.y };
 
         // main box
-        this.mainBox.position(this.x + LIST_MENU_X_OFFSET, this.y + LIST_MENU_Y_OFFSET);
+        this.mainBox.position(pos.x + LIST_MENU_X_OFFSET, pos.y + LIST_MENU_Y_OFFSET);
         this.mainBox.style(`width: ${[this.width]}px`);
         this.mainBox.style(`height: ${[this.height]}px`);
         this.mainBox.style("z-index: 2");
@@ -251,7 +251,7 @@ class Menu {
         this.mainBox.style(`border-radius: 10px`);
         this.mainBox.show();
 
-        // sets pos of buttons        
+        // sets pos of buttons
         this.addTaskButton.position(pos.x + LIST_MENU_X_OFFSET + 7, pos.y + LIST_MENU_Y_OFFSET + 7);
         this.deleteListButton.position(pos.x + LIST_MENU_X_OFFSET + 7, pos.y + LIST_MENU_Y_OFFSET + 30);
         this.editListButton.position(pos.x + LIST_MENU_X_OFFSET + 7, pos.y + LIST_MENU_Y_OFFSET + 53);
